@@ -1,4 +1,4 @@
-S FILE IS PART OF THE CYLC SUITE ENGINE.
+# FILE IS PART OF THE CYLC SUITE ENGINE.
 # Copyright (C) 2008-2018 NIWA
 #
 # This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,10 @@ _cylc() {
     local cur prev opts base
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
+    opts="tester1 tester2"
+
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    return 0
 
     CYLC_DIR=$(__cylc_get_cylc_dir)
     cylc_cmds=$(cd $CYLC_DIR/bin && ls cylc-* | sed "s/^cylc-//g")
