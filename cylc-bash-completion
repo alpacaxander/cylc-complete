@@ -34,17 +34,18 @@ _cylc() {
     local cur prev opts base
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
-    opts="tester1 tester2"
+    opts="tester1 tester2 test"
+
+    if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]]; then
+        CYLC_DIR=$(__cylc_get_cylc_dir)
+        cylc_cmds=$(cd $CYLC_DIR/bin && ls cylc-* | sed "s/^cylc-//g")
+
+        COMPREPLY=($(compgen -W "${cylc_cmds}" -- ${cur}))
+        return 0
+    fi
 
     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
     return 0
-
-    CYLC_DIR=$(__cylc_get_cylc_dir)
-    cylc_cmds=$(cd $CYLC_DIR/bin && ls cylc-* | sed "s/^cylc-//g")
-
-    COMPREPLY=($(compgen -W "${cylc_cmds}" -- ${cur}))
-    return 0
-
 }
 
 __cylc_get_cylc_dir() {
