@@ -46,7 +46,7 @@ _cylc() {
         return 0
     fi
 
-    if [[ ${prev} =~ ^(run|start)$ ]]; then
+    if [[ ${prev} =~ ^(run|edit|5to6|cat-log|log|cat-state|checkpoint|dump|ext-trigger|external-trigger|get-directory|get-gui-config|get-site-config|get-global-config|get-suite-config|get-config|get-suite-contact|get-contact|print-contact|get-suite-version|get-cylc-version|graph|graph-diff|gui|hold|monitor|ping|release|unhold|reload|restart|start|set-verbosity|stop|shutdown|suite-state|validate|view)$ ]]; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
         return 0
     fi
