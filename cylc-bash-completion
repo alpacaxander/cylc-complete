@@ -35,9 +35,9 @@ _cylc() {
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
-    opts="$(cylc print -x -y)"
+    opts="$(cylc print -x -y 2>/dev/null)"
 
-    if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]]; then
+    if [[ ${COMP_CWORD} -eq 1 ]]; then
         CYLC_DIR=$(__cylc_get_cylc_dir)
         cylc_cmds=$(cd $CYLC_DIR/bin && ls cylc-* | sed "s/^cylc-//g")
 
