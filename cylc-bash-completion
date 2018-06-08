@@ -34,6 +34,8 @@ _cylc() {
     local cur prev opts base
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    #opts="$(cylc print -x -y)"
     opts="tester1 tester2 test"
 
     if [[ ${cur} == -* || ${COMP_CWORD} -eq 1 ]]; then
@@ -44,8 +46,10 @@ _cylc() {
         return 0
     fi
 
-    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
-    return 0
+    if [[ ${prev} =~ ^(run|start)$ ]]; then
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+        return 0
+    fi
 }
 
 __cylc_get_cylc_dir() {
