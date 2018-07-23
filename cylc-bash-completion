@@ -31,11 +31,14 @@
 
 _cylc() {
 
-    local cur prev opts base
+    local cur sec prev opts base 
     COMPREPLY=()
     cur="${COMP_WORDS[COMP_CWORD]}"
+    sec="${COMP_WORDS[1]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     opts="$(cylc print -x -y 2>/dev/null)"
+    suite_cmds="run|edit|5to6|cat-log|log|cat-state|checkpoint|dump|ext-trigger|external-trigger|get-directory|get-gui-config|get-site-config|get-global-config|get-suite-config|get-config|get-suite-contact|get-contact|print-contact|get-suite-version|get-cylc-version|graph|graph-diff|gui|hold|monitor|ping|release|unhold|reload|restart|start|set-verbosity|stop|shutdown|suite-state|validate|view"
+
 
     if [[ ${COMP_CWORD} -eq 1 ]]; then
         CYLC_DIR=$(__cylc_get_cylc_dir)
@@ -45,7 +48,7 @@ _cylc() {
         return 0
     fi
 
-    if [[ ${prev} =~ ^(run|edit|5to6|cat-log|log|cat-state|checkpoint|dump|ext-trigger|external-trigger|get-directory|get-gui-config|get-site-config|get-global-config|get-suite-config|get-config|get-suite-contact|get-contact|print-contact|get-suite-version|get-cylc-version|graph|graph-diff|gui|hold|monitor|ping|release|unhold|reload|restart|start|set-verbosity|stop|shutdown|suite-state|validate|view)$ ]]; then
+    if [[ ${sec} =~ ^($suite_cmds)$ ]]; then
         COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
         return 0
     fi
